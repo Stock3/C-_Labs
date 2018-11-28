@@ -44,13 +44,16 @@
   <ItemGroup>
     <Compile Include="Classes\Article.cs" />
     <Compile Include="Classes\Data.cs" />
+    <Compile Include="Classes\Edition.cs" />
     <Compile Include="Classes\Magazine.cs" />
     <Compile Include="Classes\Person.cs" />
+    <Compile Include="Interfaces\IRateAndCopy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

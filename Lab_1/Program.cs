@@ -11,79 +11,73 @@ namespace Lab_1
     {
         static void Main(string[] args)
         {
-            var magazine = new Magazine();
-            Console.WriteLine(magazine.ToShortString());
-            Console.WriteLine();
-
-            Console.WriteLine("Weekly: " + magazine[Data.Frequency.Weekly]);
-            Console.WriteLine("Monthly: " + magazine[Data.Frequency.Montly]);
-            Console.WriteLine("Yearly: " + magazine[Data.Frequency.Yearly]);
-            Console.WriteLine();
-
-            var articles = new[]
+            var time = DateTime.Now;
+            var ed_1 = new Edition
             {
-                new Article(new Person("Nastya", "Pihur", DateTime.Now), "goalkeeper", 7),
-                new Article()
+                Publication_date_edition = time
             };
-            magazine.Name_of_magazine = "Gool!";
-            magazine.Periodicity = Data.Frequency.Weekly;
-            magazine.Date_of_issue = DateTime.Now;
-            magazine.Printing = 100;
-            magazine.List_of_articles = articles;
-            Console.WriteLine(magazine.ToString());
+            var ed_2 = new Edition
+            {
+                Publication_date_edition = time
+            };
+            Console.WriteLine("Equals: " + ed_1.Equals(ed_2));
+            Console.WriteLine("Reference: " + ReferenceEquals(ed_1, ed_2));
+            Console.WriteLine("HashCode ed_1: " + ed_1.GetHashCode() + ", HashCode ed_2: " + ed_2.GetHashCode());
+
             Console.WriteLine();
-
-            magazine.AddArticles(new Article(new Person("Alex", "Stock", DateTime.Now), "forward", 9), new Article());
-            Console.WriteLine(magazine.ToString());     
-
-            int row, col;
-            Console.Write("Enter a value through a space: ");
-            var input = Console.ReadLine().Split();
-            row = int.Parse(input[0]);
-            col = int.Parse(input[1]);
-            var one = new Article[row * col];
-            var two = new Article[row, col];
-            var jagged = new Article[row][];
-            for (var i = 0; i < row; i++)
+            try
             {
-                jagged[i] = new Article[col];
-                for (var j = 0; j < col; j++)
+                ed_1.Printing = -3;
+            }
+            catch (Exception exeption)
+            {
+                Console.WriteLine(exeption.Message);
+            }
+
+            Console.WriteLine();
+            var mag = new Magazine();
+            mag.Name_of_edition = "Gool!";
+            var articles = new Article[]
+            {
+                new Article
                 {
-                    one[i * row + j] = new Article();
-                    two[i, j] = new Article();
-                    jagged[i][j] = new Article();
-                }
-            }
-
-            var start = Environment.TickCount;
-            for(var i = 0; i < row * col; i++)
-            {
-                one[i].name_of_article = "Real Madrid";
-            }
-            var ticks = Environment.TickCount - start;
-            Console.WriteLine("One-dimensional array: " + ticks);
-
-            start = Environment.TickCount;
-            for (var i = 0; i < row; i++)
-            {
-                for (var j = 0; j < col; j++)
+                    name_of_article = "Real Madrid!",
+                    rating_of_article = 5
+                },
+                new Article
                 {
-                    two[i, j].name_of_article = "Real Madrid";
+                    name_of_article = "Liverpool",
+                    rating_of_article = 7
                 }
-            }
-            ticks = Environment.TickCount - start;
-            Console.WriteLine("Two-dimensional rectangular array: " + ticks);
-
-            start = Environment.TickCount;
-            for (var i = 0; i < row; i++)
+            };
+            var editors = new Person[]
             {
-                for (var j = 0; j < col; j++)
-                {
-                    jagged[i][j].name_of_article = "Real Madrid";
-                }
+                new Person(),
+                new Person()
+            };
+            mag.AddArticles(articles);
+            mag.AddEditors(editors);
+            Console.WriteLine(mag);
+
+            Console.WriteLine(mag.Edition.ToString());
+
+            var copy = mag.DeepCopy() as Magazine;
+            mag.Name_of_edition = "Noooo Goool!";
+            Console.WriteLine("+ Original: " + mag.Name_of_edition + ", Copy: " + copy.Name_of_edition);
+
+            Console.WriteLine();
+            Console.Write("+ Double counter: ");
+            foreach (var a in mag.GetRatings(6))
+            {
+                Console.WriteLine(a);
             }
-            ticks = Environment.TickCount - start;
-            Console.WriteLine("Two-dimensional jagged array: " + ticks);
+
+            Console.WriteLine();
+            Console.Write("+ String counter: ");
+            foreach (var a in mag.GetArticlesByName("Real Madrid!"))
+            {
+                Console.WriteLine(a);
+            }
             Console.ReadKey();
         }
     }

@@ -57,5 +57,40 @@ namespace Lab_1.Classes
         {
             return "\nPerson name: " + name + "\nPerson surname: " + surname;
         }
+
+        public override bool Equals(object obj)
+        {
+            var person = obj as Person;
+            if (ReferenceEquals(person, null))
+            {
+                return false;
+            }
+            return person.Birthday == Birthday && person.Name == Name && person.Surname == Surname;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1430107185;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Surname);
+            hashCode = hashCode * -1521134295 + Birthday.GetHashCode();
+            return hashCode;
+        }
+
+        public static bool operator ==(Person p1, Person p2)
+        {
+            return EqualityComparer<Person>.Default.Equals(p1, p2);
+        }
+
+        public static bool operator !=(Person p1, Person p2)
+        {
+            return !(p1 == p2);
+        }
+
+        public virtual object DeepCopy()
+        {
+            var copy = new Person(Name, Surname, Birthday);
+            return copy;
+        }
     }
 }

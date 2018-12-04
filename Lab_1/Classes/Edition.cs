@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab_1.Classes
 {
-    public class Edition
+    public class Edition: IComparable, IComparer<Edition>
     {
         protected string name_of_edition;
         protected DateTime publication_date_edition;
@@ -73,6 +73,29 @@ namespace Lab_1.Classes
         public override string ToString()
         {
             return "\n Edition name: " + name_of_edition + "\nDate of publication: " + publication_date_edition + "\nPrinting: " + printing;
+        }
+
+        public int CompareTo(object obj)
+        {
+            var edition = obj as Edition;
+            if (edition == null || Name_of_edition == null)
+            {
+                return -1;
+            }
+            return Name_of_edition.CompareTo(edition.Name_of_edition);
+        }
+
+        public int Compare(Edition x, Edition y)
+        {
+            if (x == null)
+            {
+                return -1;
+            }
+            if (y == null)
+            {
+                return 1;
+            }
+            return x.Publication_date_edition.CompareTo(y.Publication_date_edition);
         }
     }
 }

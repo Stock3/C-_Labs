@@ -45,8 +45,14 @@
     <Compile Include="Classes\Article.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\Edition.cs" />
+    <Compile Include="Classes\EditionPrintingComparer.cs" />
+    <Compile Include="Classes\Listener.cs" />
+    <Compile Include="Classes\ListEntry.cs" />
     <Compile Include="Classes\Magazine.cs" />
+    <Compile Include="Classes\MagazineCollection.cs" />
+    <Compile Include="Classes\MagazineListHandlerEventArgs.cs" />
     <Compile Include="Classes\Person.cs" />
+    <Compile Include="Classes\TestCollections.cs" />
     <Compile Include="Interfaces\IRateAndCopy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

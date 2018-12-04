@@ -12,10 +12,10 @@ namespace Lab_1.Classes
     public class Magazine: Edition, IRateAndCopy
     { 
         private Data.Frequency periodicity;
-        private ArrayList list_of_articles;
-        public ArrayList Editors { get; set; }
+        private List<Article> list_of_articles;
+        public List<Person> Editors { get; set; }
 
-        public Magazine(string name_of_edition, Data.Frequency periodicity, DateTime publication_date_edition, int printing, ArrayList Articles, ArrayList Editors): base(name_of_edition, publication_date_edition, printing)
+        public Magazine(string name_of_edition, Data.Frequency periodicity, DateTime publication_date_edition, int printing, List<Article> Articles, List<Person> Editors): base(name_of_edition, publication_date_edition, printing)
         {
             this.list_of_articles = Articles;
             this.Editors = Editors;
@@ -23,8 +23,8 @@ namespace Lab_1.Classes
 
         public Magazine():base()
         {
-            this.list_of_articles = new ArrayList();
-            this.Editors = new ArrayList();
+            this.list_of_articles = new List<Article>();
+            this.Editors = new List<Person>();
         }
 
         public Data.Frequency Periodicity
@@ -32,7 +32,7 @@ namespace Lab_1.Classes
             get => periodicity;
             set => periodicity = value;
         }
-        public ArrayList Articles1
+        public List<Article> Articles1
         {
             get => list_of_articles;
             set => list_of_articles = value;
@@ -106,8 +106,8 @@ namespace Lab_1.Classes
             var hashCode = -703031920;
             hashCode = hashCode * -1521134295 + base.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<Data.Frequency>.Default.GetHashCode(periodicity);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ArrayList>.Default.GetHashCode(list_of_articles);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ArrayList>.Default.GetHashCode(Editors);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<Article>>.Default.GetHashCode(list_of_articles);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<Person>>.Default.GetHashCode(Editors);
             return hashCode;
         }
 
@@ -124,17 +124,17 @@ namespace Lab_1.Classes
 
         public override object DeepCopy()
         {
-            var res = new Magazine(name_of_edition, periodicity, publication_date_edition, printing, new ArrayList(list_of_articles.Count), new ArrayList(Editors.Count));
+            var res = new Magazine(name_of_edition, periodicity, publication_date_edition, printing, new List<Article>(list_of_articles.Count), new List<Person>(Editors.Count));
             foreach (var o in list_of_articles)
             {
                 var a = o as Article;
-                res.list_of_articles.Add(a.DeepCopy());
+                res.list_of_articles.Add(a.DeepCopy() as Article);
             }
-            var editors = new ArrayList(Editors.Count);
+            var editors = new List<Person>(Editors.Count);
             foreach (var o in Editors)
             {
                 var e = o as Person;
-                editors.Add(e.DeepCopy());
+                editors.Add(e.DeepCopy() as Person);
             }
             res.Editors = editors;
             return res;

@@ -12,72 +12,40 @@ namespace Lab_1
         static void Main(string[] args)
         {
             var time = DateTime.Now;
-            var ed_1 = new Edition
+            var coll_1 = new MagazineCollection
             {
-                Publication_date_edition = time
+                name_of_collection = "PSG"
             };
-            var ed_2 = new Edition
+            var coll_2 = new MagazineCollection
             {
-                Publication_date_edition = time
+                name_of_collection = "Liverpool"
             };
-            Console.WriteLine("Equals: " + ed_1.Equals(ed_2));
-            Console.WriteLine("Reference: " + ReferenceEquals(ed_1, ed_2));
-            Console.WriteLine("HashCode ed_1: " + ed_1.GetHashCode() + ", HashCode ed_2: " + ed_2.GetHashCode());
 
+            var lis_1 = new Listener();
+            var lis_2 = new Listener();
+            coll_1.AddDefaults();
+            coll_2.AddDefaults();
+
+            coll_1.MagazineAdded += lis_1.Handler;
+            coll_1.MagazineReplaced += lis_1.Handler;
+
+            coll_2.MagazineAdded += lis_2.Handler;
+            coll_2.MagazineReplaced += lis_2.Handler;
+
+            coll_1.AddMagazines(new Magazine());
+            coll_1[3] = new Magazine();
+            coll_1.Replace(4, new Magazine());
+            coll_1.AddMagazines(new Magazine());
+
+            coll_2[1] = new Magazine();
+            coll_2.Replace(0, new Magazine());
+            coll_2.AddMagazines(new Magazine());
+            coll_2[2] = new Magazine();
+
+            Console.WriteLine(lis_1);
             Console.WriteLine();
-            try
-            {
-                ed_1.Printing = -3;
-            }
-            catch (Exception exeption)
-            {
-                Console.WriteLine(exeption.Message);
-            }
+            Console.WriteLine(lis_2);
 
-            Console.WriteLine();
-            var mag = new Magazine();
-            mag.Name_of_edition = "Gool!";
-            var articles = new Article[]
-            {
-                new Article
-                {
-                    name_of_article = "Real Madrid!",
-                    rating_of_article = 5
-                },
-                new Article
-                {
-                    name_of_article = "Liverpool",
-                    rating_of_article = 7
-                }
-            };
-            var editors = new Person[]
-            {
-                new Person(),
-                new Person()
-            };
-            mag.AddArticles(articles);
-            mag.AddEditors(editors);
-            Console.WriteLine(mag);
-
-            Console.WriteLine(mag.Edition.ToString());
-
-            var copy = mag.DeepCopy() as Magazine;
-            mag.Name_of_edition = "Noooo Goool!";
-            Console.WriteLine("+ Original: " + mag.Name_of_edition + ", Copy: " + copy.Name_of_edition);
-
-            Console.WriteLine();
-            Console.Write("+ Double counter: ");
-            foreach (var a in mag.GetRatings(6))
-            {
-                Console.WriteLine(a);
-            }
-
-            Console.WriteLine();
-            Console.Write("+ String counter: ");
-            foreach (var a in mag.GetArticlesByName("Real Madrid!"))
-            {
-                Console.WriteLine(a);
-            }
             Console.ReadKey();
         }
     }

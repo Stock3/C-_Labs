@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab_1.Classes
 {
+    [Serializable]
+
     public class Person
     {
         private string name;

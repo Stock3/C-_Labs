@@ -8,7 +8,9 @@ using Lab_1.Interfaces;
 
 namespace Lab_1.Classes
 {
-    public class Article: IRateAndCopy
+    [Serializable]
+
+    public class Article: IRateAndCopy<Article>
     {
         public Person author { get; set; }
         public string name_of_article { get; set; }
@@ -58,7 +60,7 @@ namespace Lab_1.Classes
         {
             return !(a1 == a2);
         }
-        public virtual object DeepCopy()
+        public Article DeepCopy()
         {
             var copy = new Article(author.DeepCopy() as Person, name_of_article, rating_of_article);
             return copy;

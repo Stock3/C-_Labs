@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Lab_1.Classes;
 using Lab_1.Interfaces;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Globalization;
 
 namespace Lab_1.Classes
 {
-    public class Magazine: Edition, IRateAndCopy
+    [Serializable]
+
+    public class Magazine: Edition, IRateAndCopy<Magazine>
     { 
         private Data.Frequency periodicity;
         private List<Article> list_of_articles;
@@ -122,22 +127,17 @@ namespace Lab_1.Classes
             }
         }
 
-        public override object DeepCopy()
+        public Magazine DeepCopy()
         {
-            var res = new Magazine(name_of_edition, periodicity, publication_date_edition, printing, new List<Article>(list_of_articles.Count), new List<Person>(Editors.Count));
-            foreach (var o in list_of_articles)
+            Magazine result;
+            using (var stream = new MemoryStream())
             {
-                var a = o as Article;
-                res.list_of_articles.Add(a.DeepCopy() as Article);
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, this);
+                stream.Position = 0;
+                result = formatter.Deserialize(stream) as Magazine;
             }
-            var editors = new List<Person>(Editors.Count);
-            foreach (var o in Editors)
-            {
-                var e = o as Person;
-                editors.Add(e.DeepCopy() as Person);
-            }
-            res.Editors = editors;
-            return res;
+            return result;
         }
         public IEnumerable<Article> GetRatings(double minRating)
         {
@@ -162,6 +162,85 @@ namespace Lab_1.Classes
                 }
                 yield return article;
             }
+        }
+
+        public bool Save(string filename)
+        {
+            using (var stream = File.Open(filename, FileMode.Create))
+            {
+                try
+                {
+                    var formatter = new BinaryFormatter();
+                    formatter.Serialize(stream, this);
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool Load(string filename)
+        {
+            using (var stream = File.Open(filename, FileMode.Open))
+            {
+                try
+                {
+                    var formatter = new BinaryFormatter();
+                    var result = formatter.Deserialize(stream) as Magazine;
+                    if (result == null)
+                    {
+                        return false;
+                    }
+                    Edition = result.Edition;
+                    Editors = result.Editors;
+                    Periodicity = result.Periodicity;
+                    list_of_articles = result.list_of_articles;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool AddFromConsole()
+        {
+            try
+            {
+                Console.WriteLine("String text:\n" + "<article_name>;<author_name> <author_surname> <dd.mm.yyyy date>;<rating.rating>");
+                var input = Console.ReadLine().Split(';');
+                if (input.Length != 3)
+                {
+                    return false;
+                }
+                var personData = input[1].Split(' ');
+                if (personData.Length != 3)
+                {
+                    return false;
+                }
+                var date = DateTime.ParseExact(personData[2], "dd.mm.yyyy", CultureInfo.InvariantCulture);
+                var rating = double.Parse(input[2], CultureInfo.InvariantCulture);
+                var author = new Person(personData[0], personData[1], date);
+                var article = new Article(author, input[0], rating);
+                list_of_articles.Add(article);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool Save(string filename, Magazine magazine)
+        {
+            return magazine.Save(filename);
+        }
+        public static bool Load(string filename, Magazine magazine)
+        {
+            return magazine.Load(filename);
         }
     }
 }

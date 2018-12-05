@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab_1.Classes
 {
+    [Serializable]
+
     public class Edition: IComparable, IComparer<Edition>
     {
         protected string name_of_edition;
@@ -65,11 +67,7 @@ namespace Lab_1.Classes
         {
             return !(e1 == e2);
         }
-        public virtual object DeepCopy()
-        {
-            var copy = new Edition(name_of_edition, publication_date_edition, printing);
-            return copy;
-        }
+        
         public override string ToString()
         {
             return "\n Edition name: " + name_of_edition + "\nDate of publication: " + publication_date_edition + "\nPrinting: " + printing;

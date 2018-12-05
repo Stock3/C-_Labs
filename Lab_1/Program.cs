@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Lab_1.Classes;
 
 namespace Lab_1
@@ -10,41 +7,61 @@ namespace Lab_1
     class Program
     {
         static void Main(string[] args)
-        {
-            var time = DateTime.Now;
-            var coll_1 = new MagazineCollection
+        { 
+            Console.Write("Input name: ");
+            var magazine = new Magazine
             {
-                name_of_collection = "PSG"
+                Name_of_edition = Console.ReadLine(),
+                Printing = 100
             };
-            var coll_2 = new MagazineCollection
+            var copy = magazine.DeepCopy();
+            copy.Name_of_edition = "Copy";
+            Console.WriteLine("Original: " + magazine);
+            Console.WriteLine("Copy: " + copy);
+
+            Console.Write("Enter file name: ");
+            var filename = Console.ReadLine();
+            var directory = "WrongPath";
+
+            try
             {
-                name_of_collection = "Liverpool"
-            };
+                directory = Path.GetDirectoryName(filename);
+            }
+            catch
+            {
+                Console.WriteLine("Input is not correct path");
+            }
+            while (directory == "WrongPath" || !Directory.Exists(directory))
+            {
+                Console.WriteLine("Directory does not exist");
+                Console.Write("Enter file name: ");
+                filename = Console.ReadLine();
+                try
+                {
+                    directory = Path.GetDirectoryName(filename);
+                }
+                catch
+                {
+                    Console.WriteLine("Input is not correct path");
+                }
+            }
+            if (File.Exists(filename))
+            {
+                magazine.Load(filename);
+            }
+            else
+            {
+                Console.WriteLine("New file will be created");
+            }
 
-            var lis_1 = new Listener();
-            var lis_2 = new Listener();
-            coll_1.AddDefaults();
-            coll_2.AddDefaults();
+            magazine.AddFromConsole();
+            magazine.Save(filename);
+            Console.WriteLine(magazine);
 
-            coll_1.MagazineAdded += lis_1.Handler;
-            coll_1.MagazineReplaced += lis_1.Handler;
-
-            coll_2.MagazineAdded += lis_2.Handler;
-            coll_2.MagazineReplaced += lis_2.Handler;
-
-            coll_1.AddMagazines(new Magazine());
-            coll_1[3] = new Magazine();
-            coll_1.Replace(4, new Magazine());
-            coll_1.AddMagazines(new Magazine());
-
-            coll_2[1] = new Magazine();
-            coll_2.Replace(0, new Magazine());
-            coll_2.AddMagazines(new Magazine());
-            coll_2[2] = new Magazine();
-
-            Console.WriteLine(lis_1);
-            Console.WriteLine();
-            Console.WriteLine(lis_2);
+            Magazine.Load(filename, magazine);
+            magazine.AddFromConsole();
+            Magazine.Save(filename, magazine);
+            Console.WriteLine(magazine);
 
             Console.ReadKey();
         }

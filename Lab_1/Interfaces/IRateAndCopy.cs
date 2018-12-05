@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lab_1.Interfaces
 {
-    public interface IRateAndCopy
+    public interface IRateAndCopy<T>
     {
         double rating_of_article { get; }
-        object DeepCopy();
+        T DeepCopy();
     }
 }

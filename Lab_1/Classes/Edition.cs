@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab_1.Classes
 {
     [Serializable]
-
     public class Edition: IComparable, IComparer<Edition>
     {
         protected string name_of_edition;

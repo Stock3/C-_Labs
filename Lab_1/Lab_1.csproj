@@ -9,6 +9,7 @@
     <RootNamespace>Lab_1</RootNamespace>
     <AssemblyName>Lab_1</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <LangVersion>7.1</LangVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -34,6 +35,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,9 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Article.cs" />
+    <Compile Include="Classes\GenderException.cs" />
+    <Compile Include="People\Book.cs" />
+    <Compile Include="Classes\CoupleAttribute.cs" />
     <Compile Include="Classes\Data.cs" />
     <Compile Include="Classes\Edition.cs" />
     <Compile Include="Classes\EditionPrintingComparer.cs" />
+    <Compile Include="Classes\Human.cs" />
     <Compile Include="Classes\Listener.cs" />
     <Compile Include="Classes\ListEntry.cs" />
     <Compile Include="Classes\Magazine.cs" />
@@ -53,12 +61,19 @@
     <Compile Include="Classes\MagazineListHandlerEventArgs.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\TestCollections.cs" />
+    <Compile Include="Interfaces\IHasName.cs" />
     <Compile Include="Interfaces\IRateAndCopy.cs" />
+    <Compile Include="People\Botan.cs" />
+    <Compile Include="People\Girl.cs" />
+    <Compile Include="People\PrettyGirl.cs" />
+    <Compile Include="People\SmartGirl.cs" />
+    <Compile Include="People\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,3 +5,6 @@ E:\Alex\VII семестр\Net\Lab_1\Lab_1\obj\Debug\Lab_1.csprojResolveAssembly
 E:\Alex\VII семестр\Net\Lab_1\Lab_1\obj\Debug\Lab_1.csproj.CoreCompileInputs.cache
 E:\Alex\VII семестр\Net\Lab_1\Lab_1\obj\Debug\Lab_1.exe
 E:\Alex\VII семестр\Net\Lab_1\Lab_1\obj\Debug\Lab_1.pdb
+E:\Alex\VII семестр\Net\Lab_1\Lab_1\bin\Debug\System.ValueTuple.dll
+E:\Alex\VII семестр\Net\Lab_1\Lab_1\bin\Debug\System.ValueTuple.xml
+E:\Alex\VII семестр\Net\Lab_1\Lab_1\obj\Debug\Lab_1.csproj.CopyComplete

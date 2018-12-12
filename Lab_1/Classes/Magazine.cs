@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Lab_1.Classes;
 using Lab_1.Interfaces;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Globalization;
@@ -13,7 +9,6 @@ using System.Globalization;
 namespace Lab_1.Classes
 {
     [Serializable]
-
     public class Magazine: Edition, IRateAndCopy<Magazine>
     { 
         private Data.Frequency periodicity;

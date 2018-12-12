@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Lab_1.Classes
 {
     public class TestCollections
     {
-        private List<Edition> _editions;
-        private List<string> _keys;
-        private Dictionary<Edition, Magazine> _typeDictionary;
-        private Dictionary<string, Magazine> _stringDictionary;
+        private readonly List<Edition> _editions;
+        private readonly List<string> _keys;
+        private readonly Dictionary<Edition, Magazine> _typeDictionary;
+        private readonly Dictionary<string, Magazine> _stringDictionary;
 
         public static Magazine[] AvtoGenerateMagazines(int count)
         {

@@ -13,6 +13,40 @@ namespace Lab_1
 {
     class Program
     {
+        static async Task Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+            Console.WriteLine("Enter directory to calculate size: ");
+            var directory = Console.ReadLine();
+            var size = await GetDirectorySize(directory);
+            Console.WriteLine($"Total size: {size} bytes");
+            Console.ReadKey();
+        }
+
+        static async Task<long> GetDirectorySize(string path)
+        {
+            try
+            {
+                Console.WriteLine($"Reading directory: {path}");
+                var files = Directory.GetFiles(path);
+                var fileSize = files.Sum(f => new FileInfo(f).Length);
+                var directories = Directory.GetDirectories(path);
+                var results = await Task.WhenAll(directories.Select(GetDirectorySize));
+                var size = results.Sum() + fileSize;
+                return size;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return 0;
+            }
+
+        }
+    }
+
+
+    /*class Program
+    {
         private static readonly Random Random = new Random();
 
         static void Main(string[] args)
@@ -273,5 +307,5 @@ namespace Lab_1
                 .Select(s => s[Random.Next(s.Length)]).ToArray());
         }
         private static string GenerateParName(string name) => name + "овна";
-    }
+    }*/
 }
